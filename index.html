@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#061009">
+<title>AIZE SOUNDBOX</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#061009;color:#effff2;
+ font-family:Arial,sans-serif;padding:15px
+}
+.app{max-width:480px;margin:auto}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:12px 0
+}
+.logo{font-size:21px;font-weight:bold;color:#39ff72}
+.online{font-size:11px;color:#39ff72}
+h2{font-size:23px;margin:24px 0 5px}
+.muted{color:#a4b8a8;font-size:13px}
+.panel{
+ background:#102017;border:1px solid #294331;
+ border-radius:17px;padding:17px;margin-top:15px
+}
+.hero{
+ background:linear-gradient(140deg,#123d23,#102017);
+ text-align:center;padding:24px
+}
+.hero .amount{
+ font-size:38px;color:#39ff72;font-weight:bold;
+ margin:12px
+}
+input,select{
+ width:100%;padding:14px;margin:8px 0;
+ background:#07130b;color:white;
+ border:1px solid #38533d;border-radius:10px;
+ font-size:15px
+}
+button{
+ width:100%;padding:14px;margin-top:10px;
+ border:0;border-radius:10px;background:#39ff72;
+ color:#071009;font-size:15px;font-weight:bold;
+ cursor:pointer
+}
+button.secondary{
+ background:#294331;color:white
+}
+button.danger{background:#632d2d;color:white}
+.grid{
+ display:grid;grid-template-columns:1fr 1fr;gap:10px
+}
+.stat{
+ background:#192d20;padding:13px;border-radius:12px
+}
+.stat strong{display:block;font-size:22px;margin-top:8px}
+.item{
+ padding:12px 0;border-bottom:1px solid #294331;
+ display:flex;justify-content:space-between;
+ gap:10px;font-size:13px
+}
+.tabs{
+ display:flex;gap:8px;margin-top:15px
+}
+.tabs button{margin:0;padding:12px 5px}
+.tabs button.active{background:#39ff72;color:#071009}
+.tabs button:not(.active){background:#203527;color:white}
+.hide{display:none}
+.notice{
+ background:#302916;color:#ffe0a0;
+ padding:12px;border-radius:10px;
+ font-size:12px;line-height:1.6;margin-top:12px
+}
+footer{text-align:center;color:#819787;
+ font-size:11px;padding:25px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+ <div class="logo">✦ AIZE SOUNDBOX</div>
+ <div class="online">● READY</div>
+</header>
+
+<div class="tabs">
+ <button id="merchantTab" class="active"
+ onclick="showPage('merchant')">Merchant</button>
+ <button id="ownerTab" class="secondary"
+ onclick="showPage('owner')">Owner</button>
+</div>
+
+<!-- MERCHANT PAGE -->
+<section id="merchant">
+ <h2>Merchant Dashboard</h2>
+ <p class="muted">Smart payment voice announcement</p>
+
+ <div class="panel hero">
+  <div class="muted">ANNOUNCEMENT TEST</div>
+  <div class="amount" id="display">₹0.00</div>
+  <div id="status">Soundbox is ready</div>
+ </div>
+
+ <div class="panel">
+  <h3>Shop Details</h3>
+  <input id="shop" placeholder="Enter shop name">
+  <input id="phone" placeholder="Enter contact number"
+   inputmode="numeric" maxlength="10">
+  <button onclick="saveShop()">Save Shop Details</button>
+ </div>
+
+ <div class="panel">
+  <h3>Sound Settings</h3>
+  <select id="language">
+   <option value="hi-IN">Hindi</option>
+   <option value="en-IN">English</option>
+  </select>
+  <button onclick="testVoice()">Test Voice</button>
+  <p class="muted">Connect your Bluetooth speaker
+   in your phone's Bluetooth settings first.</p>
+ </div>
+
+ <div class="panel">
+  <h3>Demo Payment Test</h3>
+  <input id="amount" type="number"
+   placeholder="Enter test amount ₹"
+   min="1" max="100000">
+  <button onclick="addDemo()">Test Demo Payment</button>
+  <div class="notice">
+   Demo only. This button does not receive or verify
+   real money. Never treat a test transaction as payment.
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>Subscription</h3>
+  <div class="grid">
+   <div class="stat">
+    <span class="muted">Price</span>
+    <strong>₹1/day</strong>
+   </div>
+   <div class="stat">
+    <span class="muted">30-day plan</span>
+    <strong>₹30</strong>
+   </div>
+  </div>
+  <p id="subscriptionStatus" class="muted">
+   No active demo subscription
+  </p>
+  <button onclick="startDemoPlan()">
+   Activate Demo Subscription
+  </button>
+  <button class="secondary" onclick="cancelDemoPlan()">
+   Cancel Demo Subscription
+  </button>
+ </div>
+
+ <div class="panel">
+  <h3>Transaction History</h3>
+  <div id="history" class="muted">
+   No demo transactions
+  </div>
+ </div>
+</section>
+
+<!-- OWNER PAGE -->
+<section id="owner" class="hide">
+ <h2>Owner Dashboard</h2>
+ <p class="muted">AIZE SOUNDBOX business overview</p>
+
+ <div class="panel">
+  <div class="grid">
+   <div class="stat">
+    <span class="muted">Demo customers</span>
+    <strong id="customers">0</strong>
+   </div>
+   <div class="stat">
+    <span class="muted">Demo revenue</span>
+    <strong id="revenue">₹0</strong>
+   </div>
+   <div class="stat">
+    <span class="muted">Demo payments</span>
+    <strong id="payments">0</strong>
+   </div>
+   <div class="stat">
+    <span class="muted">Subscriptions</span>
+    <strong id="plans">0</strong>
+   </div>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>Business Pricing</h3>
+  <div class="item">
+   <span>Daily rate</span><b>₹1</b>
+  </div>
+  <div class="item">
+   <span>30-day subscription</span><b>₹30</b>
+  </div>
+  <div class="item">
+   <span>Free trial</span><b>No</b>
+  </div>
+  <p class="muted">
+   Revenue figures are illustrative demo data,
+   not actual collected money.
+  </p>
+ </div>
+
+ <div class="panel">
+  <h3>Owner Tools</h3>
+  <button class="secondary" onclick="exportData()">
+   Export Demo Transactions
+  </button>
+  <button class="danger" onclick="resetData()">
+   Reset Demo Data
+  </button>
+ </div>
+
+ <div class="notice">
+  This owner screen is a local prototype, not a secure
+  administrator account. Production owner access requires
+  server-side login and permissions.
+ </div>
+</section>
+
+<footer>
+ AIZE SOUNDBOX © 2026<br>
+ Payment announcement demo
+</footer>
+</div>
+
+<script>
+const KEY="aize_soundbox_demo_v1";
+
+let data={
+ transactions:[],
+ shop:"",
+ phone:"",
+ subscription:false,
+ revenue:0
+};
+
+try{
+ const saved=JSON.parse(localStorage.getItem(KEY));
+ if(saved && Array.isArray(saved.transactions)){
+  data={...data,...saved};
+ }
+}catch(e){}
+
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(data));
+ render();
+}
+
+function showPage(page){
+ document.getElementById("merchant").classList.toggle(
+  "hide",page!=="merchant");
+ document.getElementById("owner").classList.toggle(
+  "hide",page!=="owner");
+ document.getElementById("merchantTab").className=
+  page==="merchant"?"active":"secondary";
+ document.getElementById("ownerTab").className=
+  page==="owner"?"active":"secondary";
+}
+
+function speak(amount,mode){
+ if(!("speechSynthesis" in window)){
+  alert("Voice is not supported by this browser.");
+  return;
+ }
+ const lang=document.getElementById("language").value;
+ const text=lang==="hi-IN"
+  ? "Demo payment. "+amount+" rupaye ka test."
+  : "Demo payment. "+amount+" rupees test.";
+
+ const msg=new SpeechSynthesisUtterance(text);
+ msg.lang=lang;
+ msg.rate=0.9;
+ speechSynthesis.cancel();
+ speechSynthesis.speak(msg);
+}
+
+function testVoice(){
+ speak(100,"test");
+}
+
+function addDemo(){
+ const amount=Number(
+  document.getElementById("amount").value);
+ if(!Number.isFinite(amount)||amount<=0||amount>100000){
+  alert("Enter a valid test amount.");
+  return;
+ }
+ data.transactions.unshift({
+  amount,
+  time:new Date().toLocaleString(),
+  type:"DEMO"
+ });
+ document.getElementById("display").textContent=
+  "₹"+amount.toFixed(2);
+ document.getElementById("status").textContent=
+  "Demo announcement playing";
+ speak(amount);
+ save();
+}
+
+function saveShop(){
+ data.shop=document.getElementById("shop").value.trim();
+ data.phone=document.getElementById("phone").value.trim();
+ save();
+ alert("Demo shop details saved on this device.");
+}
+
+function startDemoPlan(){
+ data.subscription=true;
+ document.getElementById("subscriptionStatus").textContent=
+  "Demo plan active – no money charged";
+ save();
+}
+
+function cancelDemoPlan(){
+ data.subscription=false;
+ document.getElementById("subscriptionStatus").textContent=
+  "Demo plan cancelled";
+ save();
+}
+
+function render(){
+ document.getElementById("shop").value=data.shop||"";
+ document.getElementById("phone").value=data.phone||"";
+ document.getElementById("customers").textContent=
+  data.shop?1:0;
+ document.getElementById("revenue").textContent=
+  "₹"+Number(data.revenue||0).toFixed(2);
+ document.getElementById("payments").textContent=
+  data.transactions.length;
+ document.getElementById("plans").textContent=
+  data.subscription?1:0;
+
+ document.getElementById("subscriptionStatus").textContent=
+  data.subscription
+   ?"Demo plan active – no money charged"
+   :"No active demo subscription";
+
+ const history=document.getElementById("history");
+ history.replaceChildren();
+
+ if(!data.transactions.length){
+  history.textContent="No demo transactions";
+ }else{
+  data.transactions.forEach(t=>{
+   const div=document.createElement("div");
+   div.className="item";
+   const left=document.createElement("span");
+   left.textContent="DEMO • "+t.time;
+   const right=document.createElement("b");
+   right.textContent="₹"+Number(t.amount).toFixed(2);
+   div.append(left,right);
+   history.append(div);
+  });
+ }
+}
+
+function exportData(){
+ const blob=new Blob(
+  [JSON.stringify(data,null,2)],
+  {type:"application/json"}
+ );
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="aize-soundbox-demo.json";
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function resetData(){
+ if(confirm("Delete all local demo data?")){
+  localStorage.removeItem(KEY);
+  data={
+   transactions:[],
+   shop:"",
+   phone:"",
+   subscription:false,
+   revenue:0
+  };
+  render();
+ }
+}
+
+render();
+</script>
+</body>
+</html>
