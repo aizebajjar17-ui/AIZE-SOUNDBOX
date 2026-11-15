@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AIZE SOUNDBOX V4</title>
+<title>AIZE SOUNDBOX V5</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#050b07;color:#eaffef;font-family:Arial,sans-serif;padding:15px}
@@ -17,7 +17,7 @@ nav button{flex:1;min-width:85px}
 button{background:#39ed59;color:#061009;border:0;border-radius:9px;padding:12px;font-weight:bold;cursor:pointer}
 button.secondary{background:#203a27;color:#eaffef;border:1px solid #376542}
 button.danger{background:#7e2929;color:white}
-input,select{width:100%;padding:12px;margin:6px 0 12px;background:#07100a;border:1px solid #34553b;color:white;border-radius:8px}
+input{width:100%;padding:12px;margin:6px 0 12px;background:#07100a;border:1px solid #34553b;color:white;border-radius:8px}
 label{font-size:13px;color:#b8d9bf}
 .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat{background:#07120a;padding:14px;border-radius:10px;border:1px solid #24432c}
@@ -26,13 +26,15 @@ label{font-size:13px;color:#b8d9bf}
 .hidden{display:none}
 .badge{color:#54ff73;font-size:12px}
 footer{text-align:center;color:#77947e;font-size:12px;padding:15px}
+.status{padding:10px;border-radius:8px;background:#07120a;margin:10px 0;font-size:13px}
 </style>
 </head>
 <body>
 
 <header>
 <h1>✦ AIZE SOUNDBOX</h1>
-<p>● V4 UPGRADE · Smart shop announcement dashboard</p>
+<p>● V5 CLOUD EDITION · Smart shop announcement dashboard</p>
+<div class="status" id="connectionStatus">Checking cloud connection...</div>
 </header>
 
 <nav>
@@ -43,66 +45,75 @@ footer{text-align:center;color:#77947e;font-size:12px;padding:15px}
 
 <section id="customer" class="panel">
 <h2>Customer Registration</h2>
-<p>Create a local demo customer profile.</p>
+<p>Demo profile stored only in this browser. Use fake test details only.</p>
+
 <label>Your name</label>
-<input id="cname" placeholder="Enter your name">
+<input id="cname" placeholder="Demo name">
+
 <label>Shop name</label>
-<input id="cshop" placeholder="Enter shop name">
-<label>Mobile number</label>
-<input id="cphone" type="tel" maxlength="10" placeholder="10-digit mobile number">
+<input id="cshop" placeholder="Demo shop">
+
+<label>Mobile number (fake test number only)</label>
+<input id="cphone" type="tel" maxlength="10" placeholder="10-digit demo number">
+
 <button onclick="registerCustomer()">Create Demo Profile</button>
+
 <div class="item">
 <b>Subscription Preview</b>
 <div class="statgrid">
 <div class="stat">Per day<strong>₹1</strong></div>
 <div class="stat">30 days<strong>₹30</strong></div>
 </div>
-<p>Preview only. No money is charged.</p>
+<p>Preview only. No money is charged and no AutoPay is created.</p>
 <button class="secondary" onclick="demoPlan()">Preview 30-Day Plan</button>
 </div>
+
 <h2>Customer Profiles</h2>
 <div id="customerList"></div>
 </section>
 
 <section id="merchant" class="panel hidden">
 <h2>Merchant Dashboard</h2>
+
 <label>Shop name</label>
-<input id="mshop" placeholder="Your shop name">
+<input id="mshop" placeholder="Demo shop name">
 <button onclick="saveMerchant()">Save Shop Details</button>
 
 <div class="item">
 <b>Hindi Voice Announcement</b>
-<p>Test announcement: ₹100 received (DEMO).</p>
+<p>Test announcement: ₹100 received. This is a demo only.</p>
 <button onclick="voiceTest()">▶ Play Hindi Voice</button>
 </div>
 
 <div class="item">
 <b>Demo Transaction Simulator</b>
 <label>Test amount ₹</label>
-<input id="amount" type="number" min="1" placeholder="100">
-<button onclick="runDemo()">Run Demo Only</button>
-<p>Manually entered amounts are not verified payments.</p>
+<input id="amount" type="number" min="1" max="100000" placeholder="100">
+<button onclick="runDemo()">Save Cloud Demo Event</button>
+<p>Manually entered amounts are not verified payments. Never treat this as proof of payment.</p>
 </div>
 
-<h2>Demo Transaction History</h2>
+<h2>Device Demo History</h2>
 <div id="merchantHistory"></div>
+<p>History above is stored locally on this browser. Cloud event count is shown in Owner dashboard.</p>
 </section>
 
 <section id="owner" class="panel hidden">
 <h2>Owner Overview</h2>
-<p>Local demo statistics only.</p>
+<p>Cloud demo statistics and local demo profiles.</p>
+
 <div class="statgrid">
-<div class="stat">Profiles<strong id="profileCount">0</strong></div>
-<div class="stat">Demo Events<strong id="eventCount">0</strong></div>
-<div class="stat">Demo Plans<strong id="planCount">0</strong></div>
+<div class="stat">Local Profiles<strong id="profileCount">0</strong></div>
+<div class="stat">Cloud Demo Events<strong id="eventCount">0</strong></div>
+<div class="stat">Local Demo Plans<strong id="planCount">0</strong></div>
 <div class="stat">Actual Revenue<strong>₹0</strong></div>
 </div>
 
-<h2>Registered Customers</h2>
+<h2>Registered Demo Customers</h2>
 <div id="ownerCustomers"></div>
 
 <h2>Demo Reports</h2>
-<button onclick="exportReport()">Export CSV Report</button>
+<button onclick="exportReport()">Export Local CSV Report</button>
 <button class="secondary" onclick="refresh()">Refresh Dashboard</button>
 
 <h2>Production Readiness</h2>
@@ -111,15 +122,31 @@ footer{text-align:center;color:#77947e;font-size:12px;padding:15px}
 <div class="item">AutoPay subscription — <span class="badge">Not connected</span></div>
 <div class="item">Verified payment webhook — <span class="badge">Not connected</span></div>
 
-<button class="danger" onclick="clearDemo()">Clear All Demo Data</button>
-<p>Prototype only. Data is stored in this browser and is not secure. Do not use for real customers or financial records.</p>
+<button class="danger" onclick="clearDemo()">Clear Local Demo Data</button>
+<p>Prototype only. Local customer fields are not uploaded to Cloudflare. Do not enter real customer details or use this for financial records.</p>
 </section>
 
-<footer>AIZE SOUNDBOX V4 · Prototype only · No real payments connected</footer>
+<footer>AIZE SOUNDBOX V5 · Demo prototype · No real payments connected</footer>
 
 <script>
-const get=(key)=>JSON.parse(localStorage.getItem(key)||"[]");
-const put=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+const API_URL = "https://aize-soundbox-api.aizebajjar17.workers.dev";
+
+const get = key => {
+ try {
+  return JSON.parse(localStorage.getItem(key) || "[]");
+ } catch {
+  return [];
+ }
+};
+
+const put = (key,value) =>
+ localStorage.setItem(key,JSON.stringify(value));
+
+function escapeText(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
 
 function show(id){
  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
@@ -127,35 +154,73 @@ function show(id){
  refresh();
 }
 
+async function checkConnection(){
+ const status = document.getElementById("connectionStatus");
+
+ try{
+  const res = await fetch(API_URL + "/api/health");
+  const data = await res.json();
+
+  if(res.ok && data.success){
+   status.textContent = "● Cloud API connected · Demo mode";
+   status.style.color = "#54ff73";
+  }else{
+   throw new Error("API unavailable");
+  }
+ }catch(error){
+  status.textContent = "● Cloud connection unavailable";
+  status.style.color = "#ff9b9b";
+ }
+}
+
 function registerCustomer(){
- const name=document.getElementById("cname").value.trim();
- const shop=document.getElementById("cshop").value.trim();
- const phone=document.getElementById("cphone").value.trim();
- if(!name||!shop||!/^[0-9]{10}$/.test(phone)){
-  alert("Name, shop name aur valid 10-digit number enter karo.");
+ const name = document.getElementById("cname").value.trim();
+ const shop = document.getElementById("cshop").value.trim();
+ const phone = document.getElementById("cphone").value.trim();
+
+ if(!name || !shop || !/^[0-9]{10}$/.test(phone)){
+  alert("Demo name, shop name aur 10-digit test number enter karo.");
   return;
  }
- const profiles=get("aize_profiles");
- profiles.push({name,shop,phone,date:new Date().toLocaleString()});
+
+ const profiles = get("aize_profiles");
+ profiles.push({
+  name,shop,phone,
+  date:new Date().toLocaleString()
+ });
+
  put("aize_profiles",profiles);
+
  document.getElementById("cname").value="";
  document.getElementById("cshop").value="";
  document.getElementById("cphone").value="";
- alert("Demo profile created!");
+
+ alert("Local demo profile created!");
  refresh();
 }
 
 function demoPlan(){
- const plans=get("aize_plans");
- plans.push({plan:"30 days",price:"₹30 (preview)",date:new Date().toLocaleString()});
+ const plans = get("aize_plans");
+
+ plans.push({
+  plan:"30 days",
+  price:"₹30 (preview)",
+  date:new Date().toLocaleString()
+ });
+
  put("aize_plans",plans);
- alert("30-day plan preview added. No payment made.");
+ alert("Demo plan preview added. No payment made.");
  refresh();
 }
 
 function saveMerchant(){
- const shop=document.getElementById("mshop").value.trim();
- if(!shop){alert("Shop name enter karo.");return;}
+ const shop = document.getElementById("mshop").value.trim();
+
+ if(!shop){
+  alert("Demo shop name enter karo.");
+  return;
+ }
+
  localStorage.setItem("aize_merchant_shop",shop);
  alert("Shop name saved on this device.");
 }
@@ -165,82 +230,159 @@ function voiceTest(){
   alert("Voice feature is not supported in this browser.");
   return;
  }
+
  speechSynthesis.cancel();
- const msg=new SpeechSynthesisUtterance("AIZE Soundbox demo. Ek sau rupaye prapt hue. Yeh sirf ek demo announcement hai.");
- msg.lang="hi-IN";
+
+ const msg = new SpeechSynthesisUtterance(
+  "AIZE Soundbox demo. Ek sau rupaye prapt hue. Yeh sirf ek demo announcement hai."
+ );
+
+ msg.lang = "hi-IN";
  speechSynthesis.speak(msg);
 }
 
-function runDemo(){
- const amount=Number(document.getElementById("amount").value);
- if(!Number.isFinite(amount)||amount<=0){
-  alert("Valid demo amount enter karo.");
+async function runDemo(){
+ const amount = Number(document.getElementById("amount").value);
+
+ if(!Number.isFinite(amount) || amount <= 0 || amount > 100000){
+  alert("Valid demo amount enter karo. Maximum ₹100000.");
   return;
  }
- const events=get("aize_events");
- events.push({
-  amount:amount,
-  type:"DEMO ONLY",
-  date:new Date().toLocaleString()
- });
- put("aize_events",events);
- document.getElementById("amount").value="";
- alert("Demo event saved. No real payment received.");
- refresh();
+
+ try{
+  const res = await fetch(API_URL + "/api/demo-event",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({amount})
+  });
+
+  const result = await res.json();
+
+  if(!res.ok || !result.success){
+   throw new Error(result.error || "Cloud save failed");
+  }
+
+  const events = get("aize_events");
+
+  events.push({
+   amount,
+   type:"DEMO ONLY",
+   date:new Date().toLocaleString()
+  });
+
+  put("aize_events",events);
+
+  document.getElementById("amount").value="";
+
+  alert("Demo event Cloudflare database mein save ho gaya!");
+  await refresh();
+
+ }catch(error){
+  alert("Cloud save nahi hua. Internet aur Worker check karo.");
+ }
 }
 
-function refresh(){
- const profiles=get("aize_profiles");
- const events=get("aize_events");
- const plans=get("aize_plans");
+async function refresh(){
+ const profiles = get("aize_profiles");
+ const events = get("aize_events");
+ const plans = get("aize_plans");
 
  document.getElementById("profileCount").textContent=profiles.length;
- document.getElementById("eventCount").textContent=events.length;
  document.getElementById("planCount").textContent=plans.length;
 
  document.getElementById("customerList").innerHTML=profiles.length?
- profiles.map((p,i)=>`<div class="item"><b>${escapeText(p.name)}</b><p>${escapeText(p.shop)} · ${escapeText(p.phone)}</p><small>${escapeText(p.date)}</small></div>`).join(""):
- "<p>No customer profiles yet.</p>";
+ profiles.map(p=>`
+  <div class="item">
+   <b>${escapeText(p.name)}</b>
+   <p>${escapeText(p.shop)} · ${escapeText(p.phone)}</p>
+   <small>${escapeText(p.date)}</small>
+  </div>
+ `).join(""):"<p>No demo profiles yet.</p>";
 
  document.getElementById("ownerCustomers").innerHTML=
  document.getElementById("customerList").innerHTML;
 
  document.getElementById("merchantHistory").innerHTML=events.length?
- events.slice().reverse().map(e=>`<div class="item">₹${Number(e.amount).toFixed(2)} · DEMO ONLY<p>${escapeText(e.date)}</p></div>`).join(""):
- "<p>No demo transactions.</p>";
+ events.slice().reverse().map(e=>`
+  <div class="item">
+   ₹${Number(e.amount).toFixed(2)} · DEMO ONLY
+   <p>${escapeText(e.date)}</p>
+  </div>
+ `).join(""):"<p>No local demo transactions.</p>";
 
- document.getElementById("mshop").value=localStorage.getItem("aize_merchant_shop")||"";
+ document.getElementById("mshop").value=
+ localStorage.getItem("aize_merchant_shop")||"";
+
+ try{
+  const res = await fetch(API_URL + "/api/stats");
+  const data = await res.json();
+
+  if(!res.ok || !data.success) throw new Error("Stats unavailable");
+
+  document.getElementById("eventCount").textContent=data.demoEvents;
+  document.getElementById("connectionStatus").textContent=
+   "● Cloud API and D1 database connected · Demo mode";
+  document.getElementById("connectionStatus").style.color="#54ff73";
+
+ }catch(error){
+  document.getElementById("eventCount").textContent="Unavailable";
+  document.getElementById("connectionStatus").textContent=
+   "● Cloud statistics unavailable";
+  document.getElementById("connectionStatus").style.color="#ff9b9b";
+ }
 }
 
-function escapeText(value){
- return String(value).replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function csvCell(value){
+ return '"' + String(value ?? "").replace(/"/g,'""') + '"';
 }
 
 function exportReport(){
- const profiles=get("aize_profiles");
- const events=get("aize_events");
- let csv="Type,Name or Amount,Shop or Status,Date\n";
- profiles.forEach(p=>csv+=`Customer,"${p.name}","${p.shop}","${p.date}"\n`);
- events.forEach(e=>csv+=`Demo Event,"${e.amount}","DEMO ONLY","${e.date}"\n`);
- const blob=new Blob([csv],{type:"text/csv"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
+ const profiles = get("aize_profiles");
+ const events = get("aize_events");
+
+ let rows = [
+  ["Type","Name or Amount","Shop or Status","Date"]
+ ];
+
+ profiles.forEach(p=>{
+  rows.push(["Customer",p.name,p.shop,p.date]);
+ });
+
+ events.forEach(e=>{
+  rows.push(["Demo Event",e.amount,"DEMO ONLY",e.date]);
+ });
+
+ const csv = rows.map(row=>row.map(csvCell).join(",")).join("\r\n");
+ const blob = new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+ const url = URL.createObjectURL(blob);
+
+ const a = document.createElement("a");
  a.href=url;
  a.download="aize-soundbox-demo-report.csv";
  a.click();
- URL.revokeObjectURL(url);
+
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 function clearDemo(){
- if(!confirm("Kya aap is browser ka AIZE demo data clear karna chahte hain?"))return;
- ["aize_profiles","aize_events","aize_plans","aize_merchant_shop"].forEach(k=>localStorage.removeItem(k));
+ if(!confirm("Clear this browser's local AIZE demo data? Cloud events will remain.")){
+  return;
+ }
+
+ [
+  "aize_profiles",
+  "aize_events",
+  "aize_plans",
+  "aize_merchant_shop"
+ ].forEach(k=>localStorage.removeItem(k));
+
  refresh();
- alert("Demo data cleared.");
+ alert("Local demo data cleared. Cloud events were not deleted.");
 }
 
+checkConnection();
 refresh();
 </script>
+
 </body>
 </html>
