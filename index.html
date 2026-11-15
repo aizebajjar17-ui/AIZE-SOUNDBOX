@@ -5,402 +5,590 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#061009">
-<title>AIZE SOUNDBOX V2</title>
+<title>AIZE SOUNDBOX V3</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#061009;color:#effff2;
-font-family:Arial,sans-serif;padding:14px}
-.app{max-width:490px;margin:auto}
-header{display:flex;justify-content:space-between;
-align-items:center;padding:12px 0}
-.logo{font-size:21px;font-weight:bold;color:#39ff72}
-.muted{color:#a2b8a7;font-size:13px}
-h2{font-size:23px;margin:23px 0 5px}
-h3{font-size:17px}
-.panel{background:#102017;border:1px solid #294331;
-border-radius:16px;padding:16px;margin-top:14px}
-.hero{background:linear-gradient(140deg,#164326,#102017);
-text-align:center;padding:24px}
-.amount{font-size:38px;color:#39ff72;font-weight:bold;
-margin:13px}
-input,select{width:100%;padding:13px;margin:7px 0;
-background:#07130b;color:white;border:1px solid #38533d;
-border-radius:10px;font-size:15px}
-button{width:100%;padding:13px;margin-top:9px;
-border:0;border-radius:10px;background:#39ff72;
-color:#061009;font-weight:bold;font-size:15px}
-button.alt{background:#294331;color:white}
-button.red{background:#632d2d;color:white}
-button:disabled{opacity:.45}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);
-gap:7px;margin:15px 0}
-.tabs button{font-size:12px;padding:12px 4px;margin:0;
-background:#203527;color:white}
-.tabs button.active{background:#39ff72;color:#061009}
-.page.hide{display:none}
+body{
+ margin:0;padding:14px;background:#061009;
+ color:#effff2;font-family:Arial,sans-serif
+}
+.app{max-width:500px;margin:auto}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:10px 0
+}
+.logo{font-weight:800;font-size:21px;color:#39ff72}
+.pill{font-size:11px;color:#39ff72}
+nav{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:7px;margin:16px 0
+}
+button{
+ border:0;border-radius:10px;padding:13px;
+ background:#39ff72;color:#061009;
+ font-weight:bold;font-size:14px;cursor:pointer
+}
+nav button{background:#203527;color:white}
+nav button.active{background:#39ff72;color:#061009}
+.panel{
+ background:#102017;border:1px solid #294331;
+ border-radius:15px;padding:16px;margin:13px 0
+}
+h2{font-size:22px;margin:22px 0 5px}
+h3{font-size:16px;margin:3px 0 12px}
+.muted{color:#a2b8a7;font-size:13px;line-height:1.5}
+input,select{
+ width:100%;padding:13px;margin:7px 0;
+ background:#07130b;color:white;
+ border:1px solid #38533d;border-radius:9px;
+ font-size:15px
+}
+.alt{background:#294331;color:white}
+.warn{
+ background:#302916;color:#ffe0a0;padding:12px;
+ border-radius:10px;font-size:12px;
+ line-height:1.5;margin-top:10px
+}
+.hide{display:none}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.stat{background:#192d20;padding:13px;border-radius:11px}
+.stat{background:#192d20;padding:13px;border-radius:10px}
 .stat strong{display:block;font-size:21px;margin-top:7px}
-.item{display:flex;justify-content:space-between;gap:8px;
-padding:12px 0;border-bottom:1px solid #294331;
-font-size:13px}
-.notice{padding:12px;background:#302916;color:#ffe0a0;
-border-radius:10px;font-size:12px;line-height:1.6;
-margin-top:12px}
+.item{
+ display:flex;justify-content:space-between;gap:8px;
+ padding:11px 0;border-bottom:1px solid #294331;
+ font-size:13px
+}
 .good{color:#39ff72}
-.bad{color:#ffb0a0}
-.qr{border:1px dashed #6a9b75;border-radius:12px;
-padding:24px;text-align:center;margin-top:12px}
-footer{text-align:center;color:#819787;font-size:11px;
-padding:24px}
+.bad{color:#ffb09f}
+.hero{
+ text-align:center;
+ background:linear-gradient(140deg,#164326,#102017);
+ padding:23px
+}
+.amount{font-size:36px;color:#39ff72;font-weight:bold;margin:12px}
+footer{text-align:center;color:#819787;font-size:11px;padding:22px}
 </style>
 </head>
+
 <body>
-<div class="app">
+<main class="app">
+
 <header>
  <div class="logo">✦ AIZE SOUNDBOX</div>
- <span class="good">● V2 READY</span>
+ <span class="pill">● V3 STARTER</span>
 </header>
-<p class="muted">Smart payment voice announcement platform</p>
 
-<nav class="tabs">
- <button id="tabCustomer" class="active"
- onclick="showPage('customer')">Customer</button>
- <button id="tabMerchant" onclick="showPage('merchant')">
- Merchant</button>
- <button id="tabOwner" onclick="showPage('owner')">Owner</button>
+<p class="muted">Smart payment announcements for local shops</p>
+
+<nav>
+ <button id="navCustomer" class="active"
+ onclick="page('customer')">Customer</button>
+ <button id="navMerchant"
+ onclick="page('merchant')">Merchant</button>
+ <button id="navOwner"
+ onclick="page('owner')">Owner</button>
 </nav>
 
-<!-- CUSTOMER -->
-<section id="customer" class="page">
+<!-- CUSTOMER DASHBOARD -->
+
+<section id="customer">
+
 <h2>Customer Account</h2>
-<p class="muted">Create your shop profile</p>
+<p class="muted">Demo profile and subscription preview</p>
 
 <div class="panel">
- <h3>Registration</h3>
- <input id="customerName" placeholder="Your name">
- <input id="customerShop" placeholder="Shop name">
- <input id="customerPhone" placeholder="Mobile number"
- inputmode="numeric" maxlength="10">
- <button onclick="registerCustomer()">Register Demo Account</button>
- <div id="customerStatus" class="muted"></div>
+<h3>Register Shop</h3>
+
+<input id="cName" placeholder="Your name">
+<input id="cShop" placeholder="Shop name">
+
+<input id="cPhone" inputmode="numeric"
+ maxlength="10" placeholder="Mobile number">
+
+<button onclick="register()">Create Demo Profile</button>
+
+<p id="regMsg" class="muted"></p>
 </div>
 
 <div class="panel">
- <h3>Your Subscription</h3>
- <div class="grid">
-  <div class="stat"><span class="muted">Daily price</span>
-   <strong>₹1</strong></div>
-  <div class="stat"><span class="muted">30 days</span>
-   <strong>₹30</strong></div>
+
+<h3>Subscription Price</h3>
+
+<div class="grid">
+ <div class="stat">
+  <span class="muted">Per day</span>
+  <strong>₹1</strong>
  </div>
- <p id="planStatus" class="muted">No active demo plan</p>
- <button onclick="activatePlan()">Activate Demo Plan</button>
- <button class="alt" onclick="cancelPlan()">Cancel Demo Plan</button>
- <div class="notice">
-  Demo activation does not charge money. Automatic renewal
-  and real AutoPay are not connected. Real billing requires
-  an authorized payment provider and explicit consent.
+
+ <div class="stat">
+  <span class="muted">30 days</span>
+  <strong>₹30</strong>
  </div>
 </div>
 
+<p id="subStatus" class="muted">
+No demo subscription
+</p>
+
+<button onclick="demoSubscribe()">
+Preview 30-Day Plan
+</button>
+
+<div class="warn">
+Preview only: no money is charged and no AutoPay mandate
+is created. Real recurring billing needs an approved
+payment provider, clear customer consent and
+server-side subscription handling.
+</div>
+
+</div>
+
 <div class="panel">
- <h3>Payment QR</h3>
- <div class="qr">
-  <span class="good">QR PAYMENT SETUP</span>
-  <p class="muted">Real merchant QR will appear after an
-  authorized payment provider is connected.</p>
-  <b>Not connected</b>
- </div>
+
+<h3>Payment Setup</h3>
+
+<p class="muted">
+Merchant QR and payment status will be provided by
+an authorized payment provider after onboarding.
+This starter does not generate a payment QR
+or accept money.
+</p>
+
+<span class="bad">Payment provider: Not connected</span>
+
 </div>
 </section>
 
-<!-- MERCHANT -->
-<section id="merchant" class="page hide">
+<!-- MERCHANT DASHBOARD -->
+
+<section id="merchant" class="hide">
+
 <h2>Merchant Dashboard</h2>
-<p class="muted">Your shop's soundbox controls</p>
+<p class="muted">Voice test and Bluetooth speaker checks</p>
 
 <div class="panel hero">
- <div class="muted">VOICE ANNOUNCEMENT TEST</div>
- <div class="amount" id="display">₹0.00</div>
- <div id="soundStatus">Soundbox ready</div>
+
+<div class="muted">VOICE TEST</div>
+
+<div class="amount" id="amountView">₹100.00</div>
+
+<div id="voiceStatus">Ready for test</div>
+
 </div>
 
 <div class="panel">
- <h3>Shop Settings</h3>
- <input id="merchantShop" placeholder="Shop name">
- <button class="alt" onclick="saveMerchant()">Save Shop</button>
+
+<h3>Shop and Voice</h3>
+
+<input id="mShop" placeholder="Shop name">
+
+<select id="lang">
+<option value="hi-IN">Hindi</option>
+<option value="en-IN">English</option>
+</select>
+
+<button onclick="saveShop()">Save Shop Name</button>
+
+<button class="alt" onclick="voiceTest()">
+Play Test Announcement
+</button>
+
+<button class="alt" onclick="bluetooth()">
+Bluetooth Speaker Instructions
+</button>
+
+<p id="btStatus" class="muted">
+Pair a speaker from Android Bluetooth settings.
+</p>
+
 </div>
 
 <div class="panel">
- <h3>Voice Settings</h3>
- <select id="language">
-  <option value="hi-IN">Hindi</option>
-  <option value="en-IN">English</option>
- </select>
- <button onclick="voiceTest()">Test Announcement</button>
- <button class="alt" onclick="bluetoothHelp()">
- Bluetooth Speaker Help
- </button>
- <p class="muted" id="bluetoothStatus">
- Connect speaker in Android Bluetooth settings.
- </p>
+
+<h3>Demo Transaction Simulator</h3>
+
+<input id="demoAmount" type="number"
+min="1" max="100000" placeholder="Test amount ₹">
+
+<button onclick="demoPayment()">Run Demo Only</button>
+
+<div class="warn">
+A manually entered amount is never a real payment.
+Real announcements must be triggered only by
+a verified payment-provider webhook processed
+on the server.
+</div>
+
 </div>
 
 <div class="panel">
- <h3>Demo Payment Testing</h3>
- <input id="testAmount" type="number"
- placeholder="Enter test amount ₹" min="1" max="100000">
- <button onclick="addTransaction()">Test Payment Announcement</button>
- <div class="notice">
-  DEMO ONLY. This does not verify or receive real payments.
-  Never announce a real payment based on a screenshot,
-  QR scan or manually entered amount.
- </div>
+
+<h3>Demo Transaction History</h3>
+
+<div id="txList" class="muted">
+No demo transactions
 </div>
 
-<div class="panel">
- <h3>Transaction History</h3>
- <div id="merchantHistory" class="muted">
-  No demo transactions
- </div>
 </div>
 </section>
 
-<!-- OWNER -->
-<section id="owner" class="page hide">
-<h2>Owner Admin Dashboard</h2>
-<p class="muted">Local demo business overview</p>
+<!-- OWNER DASHBOARD -->
+
+<section id="owner" class="hide">
+
+<h2>Owner Overview</h2>
+<p class="muted">Local demo statistics only</p>
 
 <div class="panel">
- <div class="grid">
-  <div class="stat"><span class="muted">Customers</span>
-   <strong id="ownerCustomers">0</strong></div>
-  <div class="stat"><span class="muted">Demo revenue</span>
-   <strong id="ownerRevenue">₹0</strong></div>
-  <div class="stat"><span class="muted">Transactions</span>
-   <strong id="ownerTransactions">0</strong></div>
-  <div class="stat"><span class="muted">Demo plans</span>
-   <strong id="ownerPlans">0</strong></div>
- </div>
+
+<div class="grid">
+
+<div class="stat">
+<span class="muted">Profiles</span>
+<strong id="nCustomers">0</strong>
+</div>
+
+<div class="stat">
+<span class="muted">Demo Plans</span>
+<strong id="nPlans">0</strong>
+</div>
+
+<div class="stat">
+<span class="muted">Demo Events</span>
+<strong id="nTx">0</strong>
+</div>
+
+<div class="stat">
+<span class="muted">Actual Revenue</span>
+<strong>₹0</strong>
+</div>
+
+</div>
 </div>
 
 <div class="panel">
- <h3>Registered Demo Customers</h3>
- <div id="customerList" class="muted">No customers yet</div>
+
+<h3>Registered Demo Profiles</h3>
+
+<div id="profileList" class="muted">
+No profiles
+</div>
+
 </div>
 
 <div class="panel">
- <h3>Business Pricing</h3>
- <div class="item"><span>Daily</span><b>₹1</b></div>
- <div class="item"><span>30-day plan</span><b>₹30</b></div>
- <div class="item"><span>Free trial</span><b>No</b></div>
- <div class="notice">
-  These figures are local demo statistics, not actual
-  subscriptions or collected revenue.
- </div>
+
+<h3>Production Readiness</h3>
+
+<div class="item">
+<span>Secure login and roles</span>
+<b class="bad">Not connected</b>
 </div>
 
-<div class="panel">
- <h3>Data Management</h3>
- <button class="alt" onclick="exportData()">Export Demo Data</button>
- <button class="red" onclick="resetData()">Reset Demo Data</button>
- <div class="notice">
-  This owner dashboard is not protected by server-side
-  authentication. Do not use it to manage real customers,
-  money or private business records.
- </div>
+<div class="item">
+<span>Payment verification</span>
+<b class="bad">Not connected</b>
+</div>
+
+<div class="item">
+<span>AutoPay subscription</span>
+<b class="bad">Not connected</b>
+</div>
+
+<div class="item">
+<span>Verified payment webhook</span>
+<b class="bad">Not connected</b>
+</div>
+
+<button class="alt" onclick="exportData()">
+Export Demo Data
+</button>
+
+<button class="alt" onclick="resetData()">
+Clear Demo Data
+</button>
+
+<div class="warn">
+This is not a secure admin panel. Data is stored
+only in this browser and can be changed by its user.
+Do not use it for real customers or financial records.
+</div>
+
 </div>
 </section>
 
-<footer>AIZE SOUNDBOX V2 © 2026<br>
-Demo software – real payment services not connected</footer>
-</div>
+<footer>
+AIZE SOUNDBOX V3<br>
+Prototype only • No real payments connected
+</footer>
+
+</main>
 
 <script>
-const KEY="aize_v2_data";
-let data={
- customers:[],transactions:[],merchantShop:"",
- plan:false
+
+const KEY="aize_soundbox_v3_demo";
+
+let db={
+ profiles:[],
+ transactions:[],
+ shop:"",
+ preview:false
 };
 
 try{
- const old=JSON.parse(localStorage.getItem(KEY));
- if(old && typeof old==="object") data={...data,...old};
+ const x=JSON.parse(localStorage.getItem(KEY));
+
+ if(x && typeof x==="object"){
+  db={...db,...x};
+ }
 }catch(e){}
 
-function save(){
- localStorage.setItem(KEY,JSON.stringify(data));
+function persist(){
+ localStorage.setItem(KEY,JSON.stringify(db));
  render();
 }
 
-function showPage(name){
- ["customer","merchant","owner"].forEach(p=>{
-  document.getElementById(p).classList.toggle("hide",p!==name);
-  document.getElementById("tab"+p[0].toUpperCase()+p.slice(1))
-   .classList.toggle("active",p===name);
+function page(p){
+
+ ["customer","merchant","owner"].forEach(x=>{
+
+  document.getElementById(x)
+  .classList.toggle("hide",x!==p);
+
+  document.getElementById(
+   "nav"+x[0].toUpperCase()+x.slice(1)
+  ).classList.toggle("active",x===p);
+
  });
+
 }
 
-function registerCustomer(){
- const name=document.getElementById("customerName").value.trim();
- const shop=document.getElementById("customerShop").value.trim();
- const phone=document.getElementById("customerPhone").value.trim();
+function register(){
 
- if(!name||!shop||!/^[0-9]{10}$/.test(phone)){
-  alert("Enter name, shop name and valid 10-digit mobile number.");
+ const name=document.getElementById("cName").value.trim();
+ const shop=document.getElementById("cShop").value.trim();
+ const phone=document.getElementById("cPhone").value.trim();
+
+ if(!name || !shop || !/^[0-9]{10}$/.test(phone)){
+  alert("Enter name, shop and a valid 10-digit test number.");
   return;
  }
- if(data.customers.some(c=>c.phone===phone)){
-  alert("This number is already registered in this demo.");
+
+ if(db.profiles.some(x=>x.phone===phone)){
+  alert("This test number already exists in this browser.");
   return;
  }
- data.customers.push({name,shop,phone,plan:false});
- document.getElementById("customerStatus").textContent=
-  "Demo registration saved on this device.";
- save();
+
+ db.profiles.push({
+  name:name,
+  shop:shop,
+  phone:phone,
+  plan:false
+ });
+
+ document.getElementById("regMsg").textContent=
+ "Demo profile saved in this browser only.";
+
+ persist();
 }
 
-function activatePlan(){
- if(!data.customers.length){
-  alert("Register a demo customer first.");
+function demoSubscribe(){
+
+ if(!db.profiles.length){
+  alert("Create a demo profile first.");
   return;
  }
- data.plan=true;
- data.customers[0].plan=true;
- save();
- alert("Demo plan activated. No payment was collected.");
+
+ db.preview=true;
+ db.profiles[0].plan=true;
+
+ persist();
+
+ alert("Plan preview enabled. No money charged.");
 }
 
-function cancelPlan(){
- data.plan=false;
- data.customers.forEach(c=>c.plan=false);
- save();
+function saveShop(){
+
+ db.shop=document.getElementById("mShop").value.trim();
+
+ persist();
+
+ alert("Shop name saved locally.");
 }
 
-function saveMerchant(){
- data.merchantShop=document.getElementById("merchantShop")
-  .value.trim();
- save();
- alert("Demo shop name saved.");
-}
+function speak(amount){
 
-function announce(amount){
  if(!("speechSynthesis" in window)){
-  alert("Voice announcement not supported in this browser.");
+  alert("Voice is not supported in this browser.");
   return;
  }
- const lang=document.getElementById("language").value;
- const text=lang==="hi-IN"
-  ?"Yeh demo announcement hai. "+amount+" rupaye."
-  :"This is a demo announcement. "+amount+" rupees.";
- const msg=new SpeechSynthesisUtterance(text);
- msg.lang=lang;
- msg.rate=.9;
+
+ const hi=document.getElementById("lang").value==="hi-IN";
+
+ const text=hi
+ ?`Yeh sirf test hai. ${amount} rupaye.`
+ :`This is only a test. ${amount} rupees.`;
+
+ const u=new SpeechSynthesisUtterance(text);
+
+ u.lang=hi?"hi-IN":"en-IN";
+ u.rate=.9;
+
  speechSynthesis.cancel();
- speechSynthesis.speak(msg);
+ speechSynthesis.speak(u);
 }
 
 function voiceTest(){
- announce(100);
+
+ document.getElementById("voiceStatus").textContent=
+ "Test announcement playing";
+
+ speak(100);
 }
 
-function bluetoothHelp(){
- document.getElementById("bluetoothStatus").textContent=
- "Open Android Settings > Bluetooth. Pair your speaker, " +
- "then test the announcement. Audio may route to the paired speaker.";
- alert("Pair your Bluetooth speaker in Android settings first.");
+function bluetooth(){
+
+ document.getElementById("btStatus").textContent=
+ "On Android, open Settings > Bluetooth, pair your speaker, then play the voice test. Audio routing depends on your phone and browser.";
+
+ alert(
+ "Pair your Bluetooth speaker in Android Settings, then test the voice."
+ );
 }
 
-function addTransaction(){
- const amount=Number(document.getElementById("testAmount").value);
- if(!Number.isFinite(amount)||amount<=0||amount>100000){
-  alert("Enter a valid amount between ₹1 and ₹100000.");
+function demoPayment(){
+
+ const a=Number(
+  document.getElementById("demoAmount").value
+ );
+
+ if(!Number.isFinite(a)||a<=0||a>100000){
+  alert("Enter a valid test amount.");
   return;
  }
- data.transactions.unshift({
-  amount:amount,
+
+ db.transactions.unshift({
+  amount:a,
   time:new Date().toLocaleString(),
-  type:"DEMO"
+  kind:"DEMO"
  });
- document.getElementById("display").textContent=
-  "₹"+amount.toFixed(2);
- document.getElementById("soundStatus").textContent=
-  "Demo announcement playing";
- announce(amount);
- save();
+
+ document.getElementById("amountView").textContent=
+ "₹"+a.toFixed(2);
+
+ document.getElementById("voiceStatus").textContent=
+ "Demo announcement playing";
+
+ speak(a);
+
+ persist();
 }
 
 function render(){
- document.getElementById("merchantShop").value=
-  data.merchantShop||"";
- document.getElementById("planStatus").textContent=
-  data.plan?"Demo plan active – no money charged":
-  "No active demo plan";
 
- const history=document.getElementById("merchantHistory");
- history.replaceChildren();
- if(!data.transactions.length){
-  history.textContent="No demo transactions";
- }else{
-  data.transactions.forEach(t=>{
-   const row=document.createElement("div");
-   row.className="item";
-   const left=document.createElement("span");
-   left.textContent="DEMO • "+t.time;
-   const right=document.createElement("b");
-   right.textContent="₹"+Number(t.amount).toFixed(2);
-   row.append(left,right);
-   history.append(row);
-  });
+ document.getElementById("mShop").value=db.shop||"";
+
+ document.getElementById("subStatus").textContent=
+ db.preview
+ ?"30-day plan preview active — no payment made"
+ :"No demo subscription";
+
+ const tx=document.getElementById("txList");
+
+ tx.replaceChildren();
+
+ if(!db.transactions.length){
+  tx.textContent="No demo transactions";
  }
 
- document.getElementById("ownerCustomers").textContent=
-  data.customers.length;
- document.getElementById("ownerRevenue").textContent=
-  "₹"+(data.plan?30:0);
- document.getElementById("ownerTransactions").textContent=
-  data.transactions.length;
- document.getElementById("ownerPlans").textContent=
-  data.customers.filter(c=>c.plan).length;
+ db.transactions.forEach(t=>{
 
- const list=document.getElementById("customerList");
- list.replaceChildren();
- if(!data.customers.length){
-  list.textContent="No customers yet";
- }else{
-  data.customers.forEach(c=>{
-   const row=document.createElement("div");
-   row.className="item";
-   const left=document.createElement("span");
-   left.textContent=c.name+" • "+c.shop;
-   const right=document.createElement("b");
-   right.textContent=c.plan?"Demo active":"No plan";
-   row.append(left,right);
-   list.append(row);
-  });
+  const r=document.createElement("div");
+  r.className="item";
+
+  const l=document.createElement("span");
+  l.textContent="DEMO • "+t.time;
+
+  const v=document.createElement("b");
+  v.textContent="₹"+Number(t.amount).toFixed(2);
+
+  r.append(l,v);
+  tx.append(r);
+
+ });
+
+ document.getElementById("nCustomers").textContent=
+ db.profiles.length;
+
+ document.getElementById("nPlans").textContent=
+ db.profiles.filter(x=>x.plan).length;
+
+ document.getElementById("nTx").textContent=
+ db.transactions.length;
+
+ const pl=document.getElementById("profileList");
+
+ pl.replaceChildren();
+
+ if(!db.profiles.length){
+  pl.textContent="No profiles";
  }
+
+ db.profiles.forEach(x=>{
+
+  const r=document.createElement("div");
+  r.className="item";
+
+  const l=document.createElement("span");
+  l.textContent=x.name+" • "+x.shop;
+
+  const v=document.createElement("b");
+  v.textContent=x.plan?"Preview":"No plan";
+
+  r.append(l,v);
+  pl.append(r);
+
+ });
+
 }
 
 function exportData(){
- const blob=new Blob([JSON.stringify(data,null,2)],
- {type:"application/json"});
- const url=URL.createObjectURL(blob);
+
+ const b=new Blob(
+  [JSON.stringify(db,null,2)],
+  {type:"application/json"}
+ );
+
+ const u=URL.createObjectURL(b);
  const a=document.createElement("a");
- a.href=url;
- a.download="aize-soundbox-demo.json";
+
+ a.href=u;
+ a.download="aize-v3-demo.json";
  a.click();
- URL.revokeObjectURL(url);
+
+ URL.revokeObjectURL(u);
 }
 
 function resetData(){
- if(confirm("Delete all demo data on this device?")){
-  data={customers:[],transactions:[],merchantShop:"",plan:false};
-  save();
+
+ if(confirm("Clear all demo data in this browser?")){
+
+  db={
+   profiles:[],
+   transactions:[],
+   shop:"",
+   preview:false
+  };
+
+  persist();
  }
+
 }
 
 render();
+
 </script>
+
 </body>
 </html>
